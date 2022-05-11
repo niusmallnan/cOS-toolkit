@@ -62,14 +62,16 @@ RUN zypper in -y \
     tar \
     timezone \
     vim \
-    which
+    which \
+    docker
 
 RUN zypper cc
 
 # Configure NetworkManager as default network management service
 RUN zypper remove -y wicked
 RUN systemctl disable wicked \
-    && systemctl enable NetworkManager
+    && systemctl enable NetworkManager \
+    && systemctl enable docker
 
 # Copy the luet config file pointing to the upgrade repository
 COPY conf/luet.yaml /etc/luet/luet.yaml
